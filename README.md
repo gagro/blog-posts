@@ -1,6 +1,6 @@
 # Blog App (WIP)
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+This is a simple fullstack (Register -> Login -> Create posts) project bootstrapped with `create-t3-app`.
 
 ## Tehnologies used in this project:
 
