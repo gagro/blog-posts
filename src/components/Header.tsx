@@ -9,7 +9,7 @@ const Header: React.FC = () => {
   const { data: sessionData } = useSession();
 
   return (
-    <header className="mb-3 flex flex-grow flex-row items-center justify-between bg-white p-3 shadow-xl">
+    <header className="mb-3 flex flex-grow flex-row items-center justify-between bg-white p-3 shadow-xl fixed w-full z-10">
       <Link href="/">
         <Image src={logo} alt="Logo" height={40} width={40} />
       </Link>

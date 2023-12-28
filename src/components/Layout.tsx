@@ -18,7 +18,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       </Head>
       <Header />
       <main
-        className={`flex flex-col items-center justify-center px-[5%] lg:px-[25%] 2xl:px-[30%] ${font.className}`}
+        className={`flex flex-col items-center justify-center px-[5%] lg:px-[25%] 2xl:px-[30%] ${font.className} pt-20`}
       >
         {children}
       </main>
