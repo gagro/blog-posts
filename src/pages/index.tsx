@@ -3,9 +3,9 @@ import React, { useMemo, useState } from "react";
 
 import { api } from "../utils/api";
 import useDebounce from "../hooks/useDebounce";
-import Posts from "../components/Posts";
+import Posts from "../components/posts/Posts";
 
-const Home: NextPage = (props) => {
+const Home: NextPage = () => {
   const [name, setName] = useState<string>("");
   const debouncedName: string = useDebounce(name);
   const { data: posts } = api.post.fetchAll.useQuery();
@@ -13,8 +13,8 @@ const Home: NextPage = (props) => {
   const filteredPosts = useMemo(
     () =>
       posts?.filter((post) => {
-        const fullName = post.user?.firstName.concat(" ", post.user.lastName);
-        return fullName!.toLowerCase().includes(debouncedName.toLowerCase());
+        const fullName = post.user.firstName.concat(" ", post.user.lastName);
+        return fullName.toLowerCase().includes(debouncedName.toLowerCase());
       }),
     [posts, debouncedName]
   );

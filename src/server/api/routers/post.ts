@@ -6,12 +6,13 @@ export const postRouter = createTRPCRouter({
     fetchAll: publicProcedure.query(({ ctx }) => {
         return ctx.prisma.post.findMany({
             include: {
-                user: true
+                user: true,
+                comments: true
             }
         })
     }),
     addPost: protectedProcedure
-        .input(z.object({ title: z.string(), text: z.string()}))
+        .input(z.object({ title: z.string(), text: z.string() }))
         .mutation(({ input, ctx }) => {
             const { title, text } = input;
             const userId = ctx.session?.user?.id;

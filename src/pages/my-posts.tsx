@@ -1,7 +1,7 @@
 import React from "react";
 import { NextPage } from "next";
 import { api } from "../utils/api";
-import Posts from "../components/Posts";
+import Posts from "../components/posts/Posts";
 
 const MyPosts: NextPage = (props) => {
   const { data: posts } = api.post.fetchUserPosts.useQuery();
