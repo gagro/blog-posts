@@ -1,37 +1,71 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import { api } from "../../../utils/api";
-import { Comment } from "@prisma/client";
+import { Comment, User } from "@prisma/client";
+import useForm from '../../../hooks/useForm';
+import dayjs from 'dayjs';
 
-interface CommentsProps {
-  comments: Comment[]
+interface CommentProps {
+  comments: (Comment & { user: User })[]
   postId: string
 }
 
-const Comments: React.FC<CommentsProps> = ({ comments, postId }) => {
-  const [comment, setComment] = useState("");
+const Comments: React.FC<CommentProps> = ({ comments, postId }) => {
+  const { handleSubmit, handleChange, values, resetState } = useForm({
+    initialValues: {
+      text: "",
+    },
+    validations: {
+      text: {
+        required: {
+          value: true,
+          message: "Comment can't be empty",
+        },
+      },
+    },
+    onSubmit: (data) => submitComment(data.text),
+  });
   const queryContext = api.useContext();
 
   const addCommentMutation = api.comment.addComment.useMutation({
     onSuccess: () => {
-      setComment("");
+      resetState();
       queryContext.post.fetchAll.invalidate();
     },
   });
 
   const submitComment = useCallback(
-    () => {
+    (comment: string) => {
       addCommentMutation.mutate({ text: comment, postId })
     },
-    [comment],
+    [],
   );
 
   return (
     <>
-      {comments.map(comment => (
-        <div key={comment.id}>{comment.text}</div>
-      ))}
-      <input type="text" name="" id="" value={comment} onChange={(e) => setComment(e.target.value)} />
-      <button type="button" onClick={submitComment}>Send Comment</button>
+      <h3>Comments ({comments.length})</h3>
+      <ul className='max-h-80 overflow-y-auto mb-1.5 pr-10'>
+        {comments.map(comment => (
+          <li key={comment.id} className='ml-2'>
+            <h1>@{comment.user.username}</h1>
+            <h3 className='text-gray-400'>{dayjs(comment.createdAt).format('MMM D, YYYY')}</h3>
+            <p className='text-gray-400'>{comment.text}</p>
+          </li>
+        ))}
+      </ul>
+      <form onSubmit={handleSubmit} className='flex'>
+        <div className='flex grow flex-col'>
+          <input
+            className='box-border rounded-xl border border-solid border-black p-2.5 text-black shadow-xl focus:outline-none'
+            type="text"
+            name="text"
+            id=""
+            placeholder='Leave a comment'
+            value={values.text}
+            onChange={handleChange}
+          />
+        </div>
+        <button type="submit" className='bg-blue-400 p-2 rounded-xl'>Send</button>
+      </form>
     </>
   )
 }

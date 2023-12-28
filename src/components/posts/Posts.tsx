@@ -8,7 +8,7 @@ import Post from "./Post";
 
 interface PostProps extends PostType {
   user: User;
-  comments: Comment[]
+  comments: (Comment & { user: User })[]
 }
 
 const Posts: React.FC<{ posts: PostProps[] }> = React.memo(({ posts }) => {

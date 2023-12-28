@@ -1,26 +1,26 @@
 import { useState } from "react";
 
 type Form = {
-    initialValues: {
-        [key: string]: string
+  initialValues: {
+    [key: string]: string
+  }
+  onSubmit: (data: any) => void
+  validations: {
+    [key: string]: {
+      pattern?: {
+        value: string
+        message: string
+      },
+      required?: {
+        value: boolean
+        message: string
+      }
     }
-    onSubmit: (data: any) => void
-    validations: {
-        [key: string]: {
-            pattern?: {
-                value: string
-                message: string
-            },
-            required?: {
-                value: boolean
-                message: string
-            }
-        }
-    }
+  }
 }
 
 type Error = {
-    [key: string]: string
+  [key: string]: string
 }
 
 const useForm = (options: Form) => {
@@ -31,7 +31,7 @@ const useForm = (options: Form) => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { value, name } = e.target;
-    
+
     setValues((prevValues) => ({
       ...prevValues,
       [name]: value,
@@ -54,9 +54,9 @@ const useForm = (options: Form) => {
         }
 
         const required = validation?.required;
-        if(required?.value && value === "") {
-            valid = false;
-            newErrors[key] = required.message;
+        if (required?.value && value.trim() === "") {
+          valid = false;
+          newErrors[key] = required.message;
         }
       }
 
@@ -73,11 +73,16 @@ const useForm = (options: Form) => {
     }
   };
 
+  const resetState = () => {
+    setValues(initialValues);
+  };
+
   return {
     values,
     handleChange,
     handleSubmit,
     errors,
+    resetState
   };
 };
 

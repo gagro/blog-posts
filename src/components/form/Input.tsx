@@ -27,15 +27,13 @@ const Input: React.FC<InputProps> = (props) => {
 
   return (
     <div
-      className={`box-border flex w-full flex-col bg-white p-4 ${
-        error ? "text-red-500" : ""
-      }`}
+      className={`box-border flex w-full flex-col bg-white p-4 ${error ? "text-red-500" : ""
+        }`}
     >
       <label htmlFor={name}>{label}</label>
       <input
-        className={`box-border rounded-xl border border-solid border-black p-2.5 text-black shadow-xl focus:outline-none ${
-          error ? "border-red-500" : ""
-        }`}
+        className={`box-border rounded-xl border border-solid border-black p-2.5 text-black shadow-xl focus:outline-none ${error ? "border-red-500" : ""
+          }`}
         type={type}
         value={value}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e)}
