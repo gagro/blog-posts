@@ -31,7 +31,12 @@ export const postRouter = createTRPCRouter({
         return ctx.prisma.post.findMany({
             where: { userId: ctx.session.user.id },
             include: {
-                user: true
+                user: true,
+                comments: {
+                    include: {
+                        user: true
+                    }
+                }
             }
         })
     })

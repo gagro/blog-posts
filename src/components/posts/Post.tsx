@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import { Post as PostType, User, Comment } from "@prisma/client";
-import Comments from './components/Comments';
+import Comments from './components/comments';
 
 interface PostProps extends PostType {
   user: User;
